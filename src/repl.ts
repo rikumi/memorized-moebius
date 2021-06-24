@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import vm from 'vm';
 import repl from 'repl';
 import createMoebius from './index';
