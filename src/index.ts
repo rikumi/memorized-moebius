@@ -1,10 +1,15 @@
 export type PipelineNode = (object: any) => any;
 
+export interface MoebiusBuilder {
+  pipeline: PipelineNode[],
+  build: () => any,
+}
+
 declare global {
   const jest: any;
 }
 
-export const moebiusBuilder = () => {
+export const createMoebiusBuilder = () => {
   const initialStages: PipelineNode[] = [];
   const pipelineStages: PipelineNode[] = [];
   const runPipeline = () => [...initialStages, ...pipelineStages].reduce((object, node) => node(object), null as any);
@@ -21,7 +26,7 @@ export const moebiusBuilder = () => {
   };
 };
 
-export const defaultBuilder = moebiusBuilder();
+export const defaultBuilder = createMoebiusBuilder();
 defaultBuilder.pipeline.unshift(object => (typeof jest !== 'undefined' ? jest.fn(object) : object));
 defaultBuilder.pipeline.push((object) => {
   object.toString = () => '[whatever Moebius]';

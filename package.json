@@ -1,6 +1,6 @@
 {
   "name": "memorized-moebius",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A never-panic deep dark object mainly intended for mocking.",
   "main": "dist/index.js",
   "type": "dist/index.d.ts",
