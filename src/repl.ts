@@ -1,6 +1,7 @@
+#!/usr/bin/env node
 import vm from 'vm';
 import repl from 'repl';
-import createMoebius, { defaultBuilder } from './index';
+import createMoebius from './index';
 
 console.log('You\'re now in a sandbox where `m` is a memorized moebius object.');
 
