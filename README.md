@@ -18,7 +18,7 @@ To address this, we might use `Proxy` to create an "omnipotent" object to play a
 
 The default moebius builder will create a **default moebius object**.
 
-Apart from [the common behavior](#common-behavior), the default moebius object is implemented with `toString`, `valueOf`, undefined `then` or `calls`, and is wrapped with `jest.fn()` if there is a jest environment.
+Apart from [the common behavior](#common-behavior), the default moebius object is implemented with `toString`, `valueOf`, undefined `then` and undefined `calls`, and is wrapped with `jest.fn()` if there is a jest environment.
 
 ```ts
 import buildDefaultMoebius from 'memorized-moebius';
@@ -27,7 +27,12 @@ const m = buildDefaultMoebius();
 
 console.log(m.foo.toString()); // '[whatever Moebius]'
 console.log(m.foo.bar().baz.valueOf()); // 42
+
+// `then` is set to undefined intentionally to prevent being sniffed as a duck-type Promise.
 console.log(typeof m.then); // 'undefined'
+
+// `calls` is set to undefined intentionally to prevent being sniffed as a duck-type jest spy.
+console.log(typeof m.calls); // 'undefined'
 ```
 
 ### Common behavior
