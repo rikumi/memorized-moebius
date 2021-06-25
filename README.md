@@ -4,6 +4,8 @@ A never-panic deep dark object with memorization mainly intended for mocking.
 
 Try it out: `npx memorized-moebius`
 
+[中文文档](https://github.com/rikumi/memorized-moebius/blob/main/README.cn.md)
+
 ## Purpose
 
 In unit tests we have tons of dependency for just a single module under test. These dependencies are often mocked by hand, bringing additional complexity into writing tests.
@@ -47,9 +49,9 @@ This design ensures a consistent behavior inside the object, which imitates a "r
 
 ### Pipeline of a builder
 
-Every moebius builder has a pipeline, starting from **a pure function that returns a new moebius object**, piping into some **preprocessors**, wrapped with a proxy, and then into **postprocessors**. All these pre- and post-processors are applied to every single object built by this builder.
+Every moebius builder has a pipeline, starting from creating **a pure function that returns a new moebius object**, piping into some **preprocessors**, wrapped with a proxy, and then into **postprocessors**. All these pre- and post-processors are applied to every single object built by this builder.
 
-You can modify the pipeline of a builder by `push`ing and `unshift`ing pipeline nodes into `builder.pipeline`.
+You can modify the pipeline of a builder by `push`ing and `unshift`ing pipeline nodes into `builder.pipeline`. Don't forget to return the processed object in your function.
 
 ```ts
 // `buildDefaultMoebius` is an alias of `defaultBuilder.build`
@@ -76,8 +78,13 @@ console.log(m.what.is.theAnswer); // 42
 
 If you do not want the default pipeline nodes, apart from clearing the pipeline of `defaultBuilder`, you can also use `createMoebiusBuilder` exported function.
 
+Please note that the objects created by a brand-new builder is lacking some fundamental things like `toString` and `valueOf`. You should always customize them before using them.
+
 ```ts
 import { createMoebiusBuilder } from 'memorized-moebius';
 const builder = createMoebiusBuilder();
+
+// Customize your `builder.pipeline` here...
+
 const m = builder.build();
 ```
