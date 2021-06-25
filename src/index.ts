@@ -16,7 +16,7 @@ export const createMoebiusBuilder = () => {
 
   initialStages.push(() => () => runPipeline());
   pipelineStages.push(object => new Proxy(object, {
-    get: (target, key) => (key in target ? target[key] : (target[key] = runPipeline())),
+    get: (target, key) => (key in target || typeof key === 'symbol' ? target[key] : (target[key] = runPipeline())),
     set: (target, key, value) => (target[key] = value, true),
   }));
 
