@@ -15,6 +15,7 @@ export const createMoebiusBuilder = () => {
   const runPipeline = () => [...initialStages, ...pipelineStages].reduce((object, node) => node(object), null as any);
 
   initialStages.push(() => () => runPipeline());
+  initialStages.push(fn => () => ('__return__' in fn ? fn.__return__ : (fn.__return__ = fn())));
   pipelineStages.push(object => new Proxy(object, {
     get: (target, key) => (key in target || typeof key === 'symbol' ? target[key] : (target[key] = runPipeline())),
     set: (target, key, value) => (target[key] = value, true),

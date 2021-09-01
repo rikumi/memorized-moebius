@@ -41,7 +41,7 @@ console.log(typeof m.calls); // 'undefined'
 
 All moebius objects built by **moebius builder**s will extend the following behavior:
 
-- When being called as a function, returns **a new moebius object** built by the same builder;
+- When being called as a function, returns the previously returned object (`fn.__return__`) if it was previously called, or **a new moebius object** built by the same builder;
 - When a property is being retrieved, returns the previous value for the same key if it was set or retrieved before, or **a new moebius object** built by the same builder;
 - When a property is being set, just set it anyway, whose value can be retrieved later.
 
